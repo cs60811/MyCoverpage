@@ -5,6 +5,7 @@
    <title>你好!我是謝政剛</title>
    <meta name="keywords" content="ChengKung">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="description" content="這是謝政剛的上履歷">
    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
@@ -13,7 +14,10 @@
 </head>
 
 <body>
-   <div id="app">
+   <div id="loadingline">
+      Loading...
+   </div>
+   <div id="app" style="display: none;">
       <v-app>
          <v-main>
             
@@ -268,6 +272,14 @@
    <script src="https://smtpjs.com/v3/smtp.js"></script>
 
    <script>
+      window.onload = function() {
+         document.getElementById("loadingline").style.display  = "none";
+         document.getElementById("app").style.display  = "block";
+      }
+
+
+
+
       new Vue({
          el: '#app',
 
