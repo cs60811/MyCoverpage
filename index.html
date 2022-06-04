@@ -1,0 +1,475 @@
+<!DOCTYPE HTML>
+<html lang="tw-zh">
+
+<head>
+   <title>你好!我是謝政剛</title>
+   <meta name="keywords" content="ChengKung">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+   
+
+</head>
+
+<body>
+   <div id="app">
+      <v-app>
+         <v-main>
+            
+            <div >
+               <v-progress-linear style="width: 100%;
+               position: -webkit-sticky;
+               position: fixed;
+               top: 0;
+               z-index: 1050" v-model="readPercentage"></v-progress-linear>
+            </div>
+            
+            
+            <v-alert
+               :type="AlertType"
+               :value="isAlertOpen"
+               transition="fade-transition"
+               style="z-index: 99999; 
+                      position: fixed; 
+                      left: 50%;
+                      transform: translateX(-50%);"
+               >
+               {{AlertMessage}}
+            </v-alert>
+            <v-container>
+               
+               <v-row no-gutters>
+                  <v-card elevation="2" outlined style="padding:5px">
+                     <v-card-text>
+                        <v-row>
+                           <v-col cols="12" sm="4" md="4">
+                              <v-row>
+                                 <!--照片區-->
+                                 <div style="display:block; margin:auto;">
+                                    <v-img max-height="345" max-width="250" src="img/bigheadpic.jpg"></v-img>
+                                 </div>
+
+
+                              </v-row>
+                              <v-row>
+                                 <v-col align="center" justify="center">
+                                    <!--社交連結-->
+
+                                    <a href="google.com.tw">
+                                       <img src="./img/icon/facebook.svg" width="20" height="20" title="Facebook" />
+                                    </a>
+                                    <a href="https://github.com/cs60811" target="_blank">
+                                       <img src="./img/icon/github.svg" width="20" height="20" />
+                                    </a>
+                                    <a href="google.com.tw">
+                                       <img src="./img/icon/instagram.svg" width="20" height="20" />
+                                    </a>
+                                    <a href="google.com.tw">
+                                       <img src="./img/icon/linkedin.svg" width="20" height="20" />
+                                    </a>
+                                    <a href="#" @click="isdialogVisiable = true">
+                                       <img src="./img/icon/mail.svg" width="20" height="20" />
+                                    </a>
+                                 </v-col>
+
+
+
+
+                              </v-row>
+                           </v-col>
+                           <v-col cols="12" sm="8" md="8">
+                              <v-row>
+                                 <div>
+                                    <h1>{{ChineseName}}</h1>
+                                    <h3>{{EnglishName}}</h3>
+                                 </div>
+                              </v-row>
+                              <v-row>
+                                 {{Introduction}}
+                              </v-row>
+
+                              <v-row>
+                                 <v-divider></v-divider>
+                              </v-row>
+
+                              <v-row>
+                                 網頁設計師、運動攝影</br>
+                                 城市，TW，桃園市八德區</br>
+                                 cs60811@gmail.com</br>
+
+
+                              </v-row>
+                           </v-col>
+                        </v-row>
+                        <v-row>
+                           <v-divider></v-divider>
+                        </v-row>
+
+                        <v-row>
+                           <v-col>
+                              <v-row>
+                                 <v-col>
+                                    <h1>經歷 Experience</h1>
+                                 </v-col>
+                              </v-row>
+                              <v-row>
+                                 <v-col>
+                                    <v-timeline align-top dense>
+                                       <v-timeline-item small v-for="(item, index) in ExperienceList"
+                                          :key="index.Title">
+                                          <v-row>
+                                             <v-col cols="2">
+                                                <strong>{{item.Range}}</strong>
+                                             </v-col>
+                                             <v-col cols="10">
+                                                <h2>{{item.Title}}</h2>
+                                                <p>{{item.Content}}</p>
+                                                <p>圖片區</p>
+                                             </v-col>
+
+                                          </v-row>
+
+                                       </v-timeline-item>
+                                    </v-timeline>
+                                 </v-col>
+                              </v-row>
+
+
+                           </v-col>
+                        </v-row>
+                        <v-row>
+                           <v-col>
+                              <v-row>
+                                 <v-col>
+                                    <h1>參與專案 Project</h1>
+                                 </v-col>
+                              </v-row>
+                              <v-row v-for="(item, index) in ProjectList" :key="index.id">
+                                 <v-col cols="2" align="center" justify="center">
+                                    <h3>
+                                       {{item.title}}
+                                    </h3>
+
+                                 </v-col>
+                                 <v-col cols="10">
+                                    <v-row>
+                                       <v-col>
+                                          {{item.content}}
+                                       </v-col>
+                                    </v-row>
+                                    <v-row v-if="item.imgs  != undefined">
+                                       <v-col :col="item.imgs.lenth/12" v-for="(picSrc, picindex) in item.imgs"
+                                          :key="picindex">
+                                          <v-img max-height="150" max-width="250" :src="picSrc"></v-img>
+                                       </v-col>
+                                    </v-row>
+                                    <v-row>
+                                       <v-col>
+                                          <p v-if="item.technologys != undefined">
+                                             使用技術 :
+                                             <v-chip small color="blue" label text-color="white"
+                                                v-for="(tec, tecnidex) in item.technologys" :key="tecnidex"
+                                                style="margin-left: 3px;">
+                                                {{tec}}
+                                             </v-chip>
+                                          </p>
+                                          <p v-if="item.tools != undefined">
+                                             使用工具 :
+                                             <v-chip small color="blue" label text-color="white"
+                                                v-for="(too, tooidex) in item.tools" :key="tooidex"
+                                                style="margin-left: 3px;">
+                                                {{too}}
+                                             </v-chip>
+                                          </p>
+
+                                       </v-col>
+
+                                    </v-row>
+
+
+                                 </v-col>
+                              </v-row>
+                           </v-col>
+                        </v-row>
+                        <v-row>
+                           <v-col>
+                              <v-row>
+                                 <v-col>
+                                    <h1>其他說明 Other</h1>
+                                 </v-col>
+
+                              </v-row>
+                              <v-row>
+                                 <v-col>
+                                    內容
+                                 </v-col>
+                              </v-row>
+
+                           </v-col>
+
+                        </v-row>
+                     </v-card-text>
+
+
+                  </v-card>
+               </v-row>
+            </v-container>
+            <v-dialog v-model="isdialogVisiable" width="500">
+
+               <v-card>
+                  <v-card-title class="text-h5 grey lighten-2">
+                     與我聯繫
+                  </v-card-title>
+
+                  <v-card-text>
+                     <v-container>
+                        <v-row>
+                           <v-col>
+                              <v-form
+                                 ref="form"
+                              >
+                                 <v-text-field v-model="form.name" :counter="10" :rules="rules.name" label="大名" required></v-text-field>
+                                 <v-text-field v-model="form.email" label="信箱" :rules="rules.email" required>
+                                 </v-text-field>
+                                 <v-textarea v-model="form.conetnt"  :counter="500" label="內容" :rules="rules.conetnt" required>
+                                 </v-textarea>
+                                 <div>
+                                    <p>
+                                       履歷評分 :
+                                       <v-rating v-model="form.level" small hover length="5"></v-rating>
+                                    </p>
+
+                                 </div>
+                              </v-form>
+                           </v-col>
+                        </v-row>
+                     </v-container>
+                  </v-card-text>
+
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                     <v-spacer></v-spacer>
+                     <v-btn color="primary" text @click="onSendMail()">
+                        送出
+                     </v-btn>
+                  </v-card-actions>
+               </v-card>
+               
+            </v-dialog>
+            
+         </v-main>
+      </v-app>
+   </div>
+   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+   <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+   <script>
+      new Vue({
+         el: '#app',
+
+         vuetify: new Vuetify(),
+         data: {
+            form: {
+               name: '',
+               email: '',
+               conetnt: '',
+               level: 3
+            },
+            isAlertOpen : false,
+            AlertMessage :'',
+            AlertType : 'success',
+            rules : {
+               name: [
+                  v => !!v || '請填寫大名',
+                  v => v.length <= 10 || '不可大於10字元',
+               ],
+               email: [
+                  v => !!v || '請填寫信箱',
+                  v => /.+@.+/.test(v) || '信箱格式不正確',
+               ],
+               conetnt: [
+                  v => !!v || '請填寫內容'
+               ],
+            },
+            isdialogVisiable: false,
+            readPercentage: 20,
+            /*validations: {
+               name: {
+                  required,
+                  maxLength: maxLength(10)
+               },
+               email: {
+                  required,
+                  email
+               },
+            },*/
+            e13: undefined,
+            ChineseName: '謝政剛',
+            EnglishName: 'Edgar',
+            Introduction: '目前在公司內部擔任MIS軟體開發工程師，有許多的開發及整合企業流程的經驗，在此職務時不斷優化改善系統穩定度及操作，以及各項報表開發經驗，網頁開發經驗，各系統間串接經驗頗豐。 在職期間利用下班空餘時間使用 Udemy 線上課程『Python / 機器學習 / 』進修相關領域，期望自己不單單只是一般的網頁設計師，在 UI/UX 方面也可以更加精進。 在職期間參與請採購系統自動化導入，擔任系統間的開發人員與溝通的橋樑，為公司節省大量人力成本，如將此經驗應用於軟體開發中的自動化測試系統中，想必可以節省大量的測試時間與人力成本，增加系統軟體的良率。',
+            ExperienceList: [{
+               'Title': '凌巨科技 - 課長 ',
+               'Range': '2015 ~ Now',
+               'Content': '使用Agentflow進行流程開發與協助公司各單位優化表單流程' +
+                  '使用 C#進行網站後台設計，並使用jQuery/EasyUI/CSS等相關前台技術進行開發，' +
+                  '使用WCF與其他異質系統串接(Java <-> C#)'
+            }, {
+               'Title': '教學助理 宜蘭大學',
+               'Range': '2013 ~ 2015',
+               'Content': '使用Agentflow進行流程開發與協助公司各單位優化表單流程，使用Asp .NET 進行全端程式開發，並使用WCF與其他異質系統串接，使用Oracle DB進行EDI'
+            }],
+            ProjectList: [{
+                  'id': '12',
+                  'title': '管理報表資訊平台',
+                  'content': `結合Oracle ERP 資訊，計算與產生公司銷售營業額`,
+                  'technologys': ['C#', 'JavaScript', 'Vue', 'Oracle', 'MSSQL', 'Restful', '.net Core'],
+                  'tools': ['Vs2019', 'VsCode', 'Git'],
+                  'imgs': undefined
+               }, {
+                  'id': '11',
+                  'title': '業務支援平台',
+                  'content': `提供管控業務案件資訊、業績、策略性備料...等功能`,
+                  'technologys': ['C#', 'JavaScript', 'Oracle', 'MVC'],
+                  'tools': ['Vs2019', 'VsCode', 'Git'],
+                  'imgs': undefined
+               }, {
+                  'id': '1',
+                  'title': '預算損益管控平台',
+                  'content': `此平台供公司內部各單位上傳部門每月/每年預算，
+                        經由上傳的預算進行報表產出，內部包含與ERP資料的串接、Data warehouse資料轉入與取用<br/>
+                        與會計運算邏輯快速產出公司每年/每月損益表，且可藉由其中的實際與預估預算進行差異分析比較<br/>
+                        快速了解公司營運狀況，與節省會計人力資源。<br/>`,
+                  'technologys': ['C#', 'JavaScript', 'Vue', 'Oracle', 'WCF', 'Webservice'],
+                  'tools': ['Vs2019', 'VsCode', 'Svn'],
+                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
+               },
+               {
+                  'id': '2',
+                  'title': '新人類流程平台系統導入',
+                  'content': `未填寫。<br/>`,
+                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
+               }, {
+                  'id': '3',
+                  'title': '集團流程戰情室',
+                  'content': `未填寫。<br/>`,
+                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
+               }, {
+                  'id': '4',
+                  'title': '企業流程效率分析報表',
+                  'content': `未填寫。<br/>`,
+                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
+               }, {
+                  'id': '5',
+                  'title': '請購流程自動化',
+                  'content': `未填寫。<br/>`,
+                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
+               }, {
+                  'id': '6',
+                  'title': '你比我猜',
+                  'content': `此遊戲是一個比手畫腳的互動式遊戲，主要有兩個玩家，一個玩家拿著手機當作猜答案的一方，<br/>
+                        而另外一位玩家則是需要用手比劃的方式，來讓猜測的玩家猜到其題目，<br/>
+                        首先可以自訂其整體遊戲時間，輸入完畢後就可以開始遊戲，<br/>
+                        如答對就可以把手機往上翻，以利計算分數，而如果真的猜不出來則把手機面向下。<br/>`,
+                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
+               }, {
+                  'id': '7',
+                  'title': '102資訊月-教育部互動闖關遊戲',
+                  'content': `此闖關遊戲是藉由已Kinect來偵測手部，並依照螢幕所顯示之題目進行舉手答題的動作，<br/>
+                        利用人機互動的方式來達到資訊安全、強震防災等教育部各項服務的宣傳效果，<br/>
+                        進而讓參訪者新的互動與體驗。此互動遊戲利用到Kinect的骨架追蹤系統，該系統可以確實抓取在範圍內的人體骨架，<br/>
+                        本計畫就利用此方式來偵測人體手部的手勢動作，而抓取手部動作並辨認參訪者的肢體動作所代表的涵義，達到寓教於樂的新應用。<br/>`,
+                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
+               }, {
+                  'id': '8',
+                  'title': '103資訊月-教育部互動闖關遊戲',
+                  'content': `未填寫。<br/>`,
+                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
+               }, {
+                  'id': '9',
+                  'title': '新人類流程平台系統導入',
+                  'content': `未填寫。<br/>`,
+                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
+               },
+            ]
+
+         },
+         methods: {
+            onScrollChange: function () {
+               readPercentage = document.scrollingElement.scrollTop / document.body.clientHeight * 100;
+            },
+
+            VMessage : function ( message ,  type = 'success' ){
+               this.AlertMessage = message;
+               this.AlertType = type;
+               this.isAlertOpen = true;
+               window.setInterval(() => {
+                  this.isAlertOpen = false;
+               }, 3000) ;
+
+
+            },
+
+
+
+            onSendMail : function (){
+               //驗證是否完成填寫
+               if (!this.$refs.form.validate())
+               return;
+
+               var body = `有人聯繫你了! 請盡快回覆<br>
+                              <hr>
+                              姓名 : ${this.form.name}<br>
+                              Email : ${this.form.email}<br>
+                              內容 : ${this.form.conetnt}<br>
+                              履歷評分 : ${this.form.level}<br>
+                              `;
+
+               
+               //發信
+               Email.send({
+                  SecureToken :"c4ef5ad8-3d86-4c1e-adf5-992958322872",
+                  To : 'cs60811@gmail.com',
+                  From : "cs60811@gmail.com",
+                  Subject : "謝政剛的履歷通知",
+                  Body : body
+               }).then( (message) => {
+                  if (message == 'OK'){
+                     this.VMessage('發送成功');
+                     this.isdialogVisiable =  false;
+                  }else{
+                     this.VMessage('發送失敗','error');
+                     console.log(message);
+                  }
+                  
+                  
+               }
+               
+               );
+            }
+         },
+         created() {
+            var self = this;
+            document.addEventListener("scroll", function(){
+               self.readPercentage = document.scrollingElement.scrollTop / document.body.clientHeight * 100;
+               //this.onScrollChange();
+            });
+
+            /*axios
+            .get('./data.json')
+            .then(response => {
+                this.data = data;
+            })
+            .catch((e) => {
+                console.error(e)
+            })*/
+         }
+      })
+   </script>
+
+</body>
+
+</html>
