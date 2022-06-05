@@ -11,7 +11,7 @@
    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-   
+
 
 </head>
 
@@ -59,7 +59,7 @@
 
                               </v-row>
                               <v-row>
-                                 <v-col align="center" justify="center">
+                                 <v-col align="center" justify="center" >
                                     <!--社交連結-->
 
                                     <a href="google.com.tw">
@@ -74,7 +74,7 @@
                                     <a href="google.com.tw">
                                        <img src="./img/icon/linkedin.svg" width="20" height="20" />
                                     </a>
-                                    <a href="#" @click="isdialogVisiable = true">
+                                    <a href="#" @click="isdialogVisiable = true" id="DemoStep3">
                                        <img src="./img/icon/mail.svg" width="20" height="20" />
                                     </a>
                                  </v-col>
@@ -86,7 +86,7 @@
                            </v-col>
                            <v-col cols="12" sm="8" md="8">
                               <v-row>
-                                 <div>
+                                 <div id="DemoStep1">
                                     <h1>{{ChineseName}}</h1>
                                     <h3>{{EnglishName}}</h3>
                                  </div>
@@ -98,14 +98,17 @@
                               <v-row>
                                  <v-divider></v-divider>
                               </v-row>
-
                               <v-row>
-                                 網頁設計師、運動攝影</br>
-                                 城市，TW，桃園市八德區</br>
-                                 cs60811@gmail.com</br>
-
-
+                                 <div id="DemoStep2">
+                                    - C# ( 5 years exp.) <br>
+                                    - Delphi ( 2 years exp.) <br>
+                                    - Vue / Js / Html  ( 5 years exp.)<br>
+                                    - PLSQL ( 7 years exp.)<br>
+                                    - Java ( 2 years exp.)<br>
+                                 </div>
+                                 
                               </v-row>
+                              
                            </v-col>
                         </v-row>
                         <v-row>
@@ -125,10 +128,10 @@
                                        <v-timeline-item small v-for="(item, index) in ExperienceList"
                                           :key="index.Title">
                                           <v-row>
-                                             <v-col cols="2">
+                                             <v-col cols="12" md="2">
                                                 <strong>{{item.Range}}</strong>
                                              </v-col>
-                                             <v-col cols="10">
+                                             <v-col cols="12"  md="10">
                                                 <h2>{{item.Title}}</h2>
                                                 <p>{{item.Content}}</p>
                                                 <p>圖片區</p>
@@ -172,9 +175,12 @@
                                     </v-row>
                                     <v-row>
                                        <v-col>
+                                          <v-row>
+                                             <!--TODO 在小視窗時整齊排列-->
+                                          </v-row>
                                           <p v-if="item.technologys != undefined">
                                              使用技術 :
-                                             <v-chip small color="blue" label text-color="white"
+                                             <v-chip small color="blue"  text-color="white"
                                                 v-for="(tec, tecnidex) in item.technologys" :key="tecnidex"
                                                 style="margin-left: 3px;">
                                                 {{tec}}
@@ -182,7 +188,7 @@
                                           </p>
                                           <p v-if="item.tools != undefined">
                                              使用工具 :
-                                             <v-chip small color="blue" label text-color="white"
+                                             <v-chip small color="blue"  text-color="white"
                                                 v-for="(too, tooidex) in item.tools" :key="tooidex"
                                                 style="margin-left: 3px;">
                                                 {{too}}
@@ -273,12 +279,48 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
    <script src="https://smtpjs.com/v3/smtp.js"></script>
 
+   <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+   <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+   <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+   <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+
    <script>
       window.onload = function() {
          document.getElementById("loadingline").style.display  = "none";
          document.getElementById("app").style.display  = "block";
-      }
 
+         window.setTimeout(() => {
+            introJs()
+            .setOptions({
+            steps: [{
+               title: '歡迎來到謝政剛的履歷',
+               intro: '我這邊將快速為您介紹 👋'
+            },
+            {
+               element: document.querySelector('#DemoStep1'),
+               intro: '這是我的名子'
+            },
+            {
+               element: document.querySelector('#DemoStep2'),
+               intro: '這是我的技能年資'
+            },
+            {
+               element: document.querySelector('#DemoStep3'),
+               intro: '這裡可以直接連絡我'
+            }]
+            })
+            .setOption("skipLabel", "跳過導覽")
+            .setOption("doneLabel", "完成")
+            .start();
+         }, 1000) ;
+         
+         //.onexit(callback);
+
+      }
+      
 
 
 
@@ -310,17 +352,7 @@
                ],
             },
             isdialogVisiable: false,
-            readPercentage: 20,
-            /*validations: {
-               name: {
-                  required,
-                  maxLength: maxLength(10)
-               },
-               email: {
-                  required,
-                  email
-               },
-            },*/
+            readPercentage: 0,
             e13: undefined,
             ChineseName: '謝政剛',
             EnglishName: 'Edgar',
@@ -420,15 +452,12 @@
                this.AlertMessage = message;
                this.AlertType = type;
                this.isAlertOpen = true;
-               window.setInterval(() => {
+               window.setTimeout(() => {
                   this.isAlertOpen = false;
                }, 3000) ;
 
 
             },
-
-
-
             onSendMail : function (){
                //驗證是否完成填寫
                if (!this.$refs.form.validate())
@@ -468,8 +497,11 @@
          created() {
             var self = this;
             document.addEventListener("scroll", function(){
-               self.readPercentage = document.scrollingElement.scrollTop / document.body.clientHeight * 100;
-               //this.onScrollChange();
+               if(document.scrollingElement.scrollTop == 0)
+                  self.readPercentage = 0;
+               else
+                  self.readPercentage = (document.scrollingElement.scrollTop + window.innerHeight) / document.body.clientHeight * 100;
+               
             });
 
             /*axios
@@ -482,7 +514,10 @@
             })*/
          }
       })
+
+      
    </script>
+   
 
 </body>
 
