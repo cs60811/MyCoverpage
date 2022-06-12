@@ -62,21 +62,19 @@
                                  <v-col align="center" justify="center" >
                                     <!--社交連結-->
 
-                                    <a href="google.com.tw">
-                                       <img src="./img/icon/facebook.svg" width="20" height="20" title="Facebook" />
-                                    </a>
-                                    <a href="https://github.com/cs60811" target="_blank">
-                                       <img src="./img/icon/github.svg" width="20" height="20" />
-                                    </a>
-                                    <a href="google.com.tw">
-                                       <img src="./img/icon/instagram.svg" width="20" height="20" />
-                                    </a>
-                                    <a href="google.com.tw">
-                                       <img src="./img/icon/linkedin.svg" width="20" height="20" />
-                                    </a>
-                                    <a href="#" @click="isdialogVisiable = true" id="DemoStep3">
-                                       <img src="./img/icon/mail.svg" width="20" height="20" />
-                                    </a>
+                                    <a class="icon icon-facebook" href="#facebook" ></a>
+                                    <a class="icon icon-github" href="https://github.com/cs60811" target="_blank" ></a>
+                                    <a class="icon icon-instagram" href="#" ></a>
+                                    <a class="icon icon-linkedin" href="google.com.tw" ></a>
+                                    <a class="icon icon-mail" href="#" @click="isdialogVisiable = true" id="DemoStep3" ></a>
+                                    <v-tooltip v-model="displayTooltip" bottom >
+                                       <template v-slot:activator="{ on, attrs }">
+                                          <a href="#" @click="onDemoClick()" v-bind="attrs" v-on="on" class="icon icon-demo"  ></a>
+                                          
+                                        </template>
+                                       
+                                       <span>這裡可以幫你導覽履歷唷!</span>
+                                    </v-tooltip>
                                  </v-col>
 
 
@@ -133,7 +131,7 @@
                                              </v-col>
                                              <v-col cols="12"  md="10">
                                                 <h2>{{item.Title}}</h2>
-                                                <p>{{item.Content}}</p>
+                                                <p v-html="item.Content"></p>
                                                 <p>圖片區</p>
                                              </v-col>
 
@@ -271,12 +269,13 @@
                
                
             </v-dialog>
-            <div id="grecaptcha"></div>
             
             
          </v-main>
       </v-app>
    </div>
+
+   <script src="./data.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
@@ -288,45 +287,17 @@
    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
-  <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+   <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
+   
 
    <script>
       window.onload = function() {
          document.getElementById("loadingline").style.display  = "none";
          document.getElementById("app").style.display  = "block";
 
-         /*window.setTimeout(() => {
-            introJs()
-            .setOptions({
-            steps: [{
-               title: '歡迎來到謝政剛的履歷',
-               intro: '我這邊將快速為您介紹 👋'
-            },
-            {
-               element: document.querySelector('#DemoStep1'),
-               intro: '這是我的名字'
-            },
-            {
-               element: document.querySelector('#DemoStep2'),
-               intro: '這是我的技能年資'
-            },
-            {
-               element: document.querySelector('#DemoStep3'),
-               intro: '這裡可以直接連絡我'
-            }]
-            })
-            .setOption("skipLabel", "跳過導覽")
-            .setOption("doneLabel", "完成")
-            .start();
-         }, 1000) ;
-         */
-         
-         //.onexit(callback);
-
       }
       
-
 
 
       new Vue({
@@ -335,6 +306,7 @@
          vuetify: new Vuetify(),
          data: {
             sitekey: '6LfCs2IgAAAAAEvvUt5zt3VseDbYQtCkDjcSbu_q',
+            displayTooltip : false,
             form: {
                name: '',
                email: '',
@@ -360,96 +332,39 @@
             isdialogVisiable: false,
             readPercentage: 0,
             e13: undefined,
-            ChineseName: '謝政剛',
-            EnglishName: 'Edgar',
-            Introduction: '目前在公司內部擔任MIS軟體開發工程師，有許多的開發及整合企業流程的經驗，在此職務時不斷優化改善系統穩定度及操作，以及各項報表開發經驗，網頁開發經驗，各系統間串接經驗頗豐。 在職期間利用下班空餘時間使用 Udemy 線上課程『Python / 機器學習 / 』進修相關領域，期望自己不單單只是一般的網頁設計師，在 UI/UX 方面也可以更加精進。 在職期間參與請採購系統自動化導入，擔任系統間的開發人員與溝通的橋樑，為公司節省大量人力成本，如將此經驗應用於軟體開發中的自動化測試系統中，想必可以節省大量的測試時間與人力成本，增加系統軟體的良率。',
-            ExperienceList: [{
-               'Title': '凌巨科技 - 課長 ',
-               'Range': '2015 ~ Now',
-               'Content': '使用Agentflow進行流程開發與協助公司各單位優化表單流程' +
-                  '使用 C#進行網站後台設計，並使用jQuery/EasyUI/CSS等相關前台技術進行開發，' +
-                  '使用WCF與其他異質系統串接(Java <-> C#)'
-            }, {
-               'Title': '教學助理 宜蘭大學',
-               'Range': '2013 ~ 2015',
-               'Content': '使用Agentflow進行流程開發與協助公司各單位優化表單流程，使用Asp .NET 進行全端程式開發，並使用WCF與其他異質系統串接，使用Oracle DB進行EDI'
-            }],
-            ProjectList: [{
-                  'id': '12',
-                  'title': '管理報表資訊平台',
-                  'content': `結合Oracle ERP 資訊，計算與產生公司銷售營業額`,
-                  'technologys': ['C#', 'JavaScript', 'Vue', 'Oracle', 'MSSQL', 'Restful', '.net Core'],
-                  'tools': ['Vs2019', 'VsCode', 'Git'],
-                  'imgs': undefined
-               }, {
-                  'id': '11',
-                  'title': '業務支援平台',
-                  'content': `提供管控業務案件資訊、業績、策略性備料...等功能`,
-                  'technologys': ['C#', 'JavaScript', 'Oracle', 'MVC'],
-                  'tools': ['Vs2019', 'VsCode', 'Git'],
-                  'imgs': undefined
-               }, {
-                  'id': '1',
-                  'title': '預算損益管控平台',
-                  'content': `此平台供公司內部各單位上傳部門每月/每年預算，
-                        經由上傳的預算進行報表產出，內部包含與ERP資料的串接、Data warehouse資料轉入與取用<br/>
-                        與會計運算邏輯快速產出公司每年/每月損益表，且可藉由其中的實際與預估預算進行差異分析比較<br/>
-                        快速了解公司營運狀況，與節省會計人力資源。<br/>`,
-                  'technologys': ['C#', 'JavaScript', 'Vue', 'Oracle', 'WCF', 'Webservice'],
-                  'tools': ['Vs2019', 'VsCode', 'Svn'],
-                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
-               },
-               {
-                  'id': '2',
-                  'title': '新人類流程平台系統導入',
-                  'content': `未填寫。<br/>`,
-                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
-               }, {
-                  'id': '3',
-                  'title': '集團流程戰情室',
-                  'content': `未填寫。<br/>`,
-                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
-               }, {
-                  'id': '4',
-                  'title': '企業流程效率分析報表',
-                  'content': `未填寫。<br/>`,
-                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
-               }, {
-                  'id': '5',
-                  'title': '請購流程自動化',
-                  'content': `未填寫。<br/>`,
-                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
-               }, {
-                  'id': '6',
-                  'title': '你比我猜',
-                  'content': `此遊戲是一個比手畫腳的互動式遊戲，主要有兩個玩家，一個玩家拿著手機當作猜答案的一方，<br/>
-                        而另外一位玩家則是需要用手比劃的方式，來讓猜測的玩家猜到其題目，<br/>
-                        首先可以自訂其整體遊戲時間，輸入完畢後就可以開始遊戲，<br/>
-                        如答對就可以把手機往上翻，以利計算分數，而如果真的猜不出來則把手機面向下。<br/>`,
-                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
-               }, {
-                  'id': '7',
-                  'title': '102資訊月-教育部互動闖關遊戲',
-                  'content': `此闖關遊戲是藉由已Kinect來偵測手部，並依照螢幕所顯示之題目進行舉手答題的動作，<br/>
-                        利用人機互動的方式來達到資訊安全、強震防災等教育部各項服務的宣傳效果，<br/>
-                        進而讓參訪者新的互動與體驗。此互動遊戲利用到Kinect的骨架追蹤系統，該系統可以確實抓取在範圍內的人體骨架，<br/>
-                        本計畫就利用此方式來偵測人體手部的手勢動作，而抓取手部動作並辨認參訪者的肢體動作所代表的涵義，達到寓教於樂的新應用。<br/>`,
-                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
-               }, {
-                  'id': '8',
-                  'title': '103資訊月-教育部互動闖關遊戲',
-                  'content': `未填寫。<br/>`,
-                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
-               }, {
-                  'id': '9',
-                  'title': '新人類流程平台系統導入',
-                  'content': `未填寫。<br/>`,
-                  'imgs': ['./img/portfolio/app1.png', './img/portfolio/app2.png']
-               },
-            ]
+            ChineseName: Mydata.Title.ChineseName,
+            EnglishName: Mydata.Title.EnglishName,
+            Introduction: Mydata.Introduction['zh-tw'],
+            ExperienceList: Mydata.ExperienceList,
+            ProjectList: Mydata.ProjectList
 
          },
          methods: {
+            onDemoClick : function (){
+               introJs()
+                  .setOptions({
+                  steps: [{
+                     title: '歡迎來到謝政剛的履歷',
+                     intro: '我這邊將快速為您介紹 👋'
+                  },
+                  {
+                     element: document.querySelector('#DemoStep1'),
+                     intro: '這是我的名字'
+                  },
+                  {
+                     element: document.querySelector('#DemoStep2'),
+                     intro: '這是我的技能年資'
+                  },
+                  {
+                     element: document.querySelector('#DemoStep3'),
+                     intro: '這裡可以直接連絡我'
+                  }]
+                  })
+                  .setOption("skipLabel", "跳過導覽")
+                  .setOption("doneLabel", "完成")
+                  .start();
+
+            },
             onScrollChange: function () {
                readPercentage = document.scrollingElement.scrollTop / document.body.clientHeight * 100;
             },
@@ -500,14 +415,11 @@
                );
             }
          },
-         loaded() {
-            
-         },
          submit: function(token) {
             console.log(token);
          },
 
-         created() {
+         mounted() {
             var self = this;
             document.addEventListener("scroll", function(){
                if(document.scrollingElement.scrollTop == 0)
@@ -518,11 +430,8 @@
             });
 
             setTimeout(() => {
-            window.grecaptcha.render("grecaptcha", {
-               sitekey: this.sitekey,
-               callback: this.submit
-            });
-            }, 200);
+               this.displayTooltip = true;
+            }, 500);
 
 
 
@@ -537,7 +446,7 @@
          }
       })
 
-      
+      //style="background: red;animation: mymove 5s infinite;-webkit-animation: mymove 5s infinite;"
    </script>
    
 
@@ -545,5 +454,41 @@
 
 </html>
 
-
+<style>
+   @keyframes mymove{
+      from{ background-color:red;}
+      to{background-color:blue;}
+   }
+   .icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-size: cover;
+   }
+   .icon:hover,
+   .icon:focus {
+      filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+   }
+   .icon-demo {
+      background-image: url(./img/icon/demo.svg);
+   }
+   .icon-demo {
+      background-image: url(./img/icon/demo.svg);
+   }
+   .icon-facebook {
+      background-image: url(./img/icon/facebook.svg);
+   }
+   .icon-github {
+      background-image: url(./img/icon/github.svg);
+   }
+   .icon-instagram {
+      background-image: url(./img/icon/instagram.svg);
+   }
+   .icon-linkedin {
+      background-image: url(./img/icon/linkedin.svg);
+   }
+   .icon-mail {
+      background-image: url(./img/icon/mail.svg);
+   }
+</style>
 
