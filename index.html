@@ -269,7 +269,10 @@
                   </v-card-actions>
                </v-card>
                
+               
             </v-dialog>
+            <div id="grecaptcha"></div>
+            
             
          </v-main>
       </v-app>
@@ -286,13 +289,14 @@
 
    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
 
    <script>
       window.onload = function() {
          document.getElementById("loadingline").style.display  = "none";
          document.getElementById("app").style.display  = "block";
 
-         window.setTimeout(() => {
+         /*window.setTimeout(() => {
             introJs()
             .setOptions({
             steps: [{
@@ -301,7 +305,7 @@
             },
             {
                element: document.querySelector('#DemoStep1'),
-               intro: '這是我的名子'
+               intro: '這是我的名字'
             },
             {
                element: document.querySelector('#DemoStep2'),
@@ -316,6 +320,7 @@
             .setOption("doneLabel", "完成")
             .start();
          }, 1000) ;
+         */
          
          //.onexit(callback);
 
@@ -329,6 +334,7 @@
 
          vuetify: new Vuetify(),
          data: {
+            sitekey: '6LfCs2IgAAAAAEvvUt5zt3VseDbYQtCkDjcSbu_q',
             form: {
                name: '',
                email: '',
@@ -494,6 +500,13 @@
                );
             }
          },
+         loaded() {
+            
+         },
+         submit: function(token) {
+            console.log(token);
+         },
+
          created() {
             var self = this;
             document.addEventListener("scroll", function(){
@@ -503,6 +516,15 @@
                   self.readPercentage = (document.scrollingElement.scrollTop + window.innerHeight) / document.body.clientHeight * 100;
                
             });
+
+            setTimeout(() => {
+            window.grecaptcha.render("grecaptcha", {
+               sitekey: this.sitekey,
+               callback: this.submit
+            });
+            }, 200);
+
+
 
             /*axios
             .get('./data.json')
@@ -522,3 +544,6 @@
 </body>
 
 </html>
+
+
+
