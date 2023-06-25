@@ -2,12 +2,12 @@
 <html lang="tw-zh">
 
 <head>
-   <title>你好!我是謝政剛</title>
-   <meta name="keywords" content="ChengKung">
+   <title>你好！我是謝政剛</title>
+   <meta name="keywords" content="ChengKang">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <meta name="description" content="這是謝政剛的上履歷">
+   <meta name="description" content="這是謝政剛的履歷表">
    <meta property="og:title" content="你好!我是謝政剛" />
-   <meta property="og:description" content="這是謝政剛的上履歷" />
+   <meta property="og:description" content="這是謝政剛的履歷表" />
    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
@@ -16,35 +16,41 @@
 </head>
 
 <body>
+
    <div id="loadingline">
-      Loading...
+      <div class="lds-facebook">
+         <div style="
+               background-color: antiquewhite;
+         "></div>
+         <div style="
+               background-color: antiquewhite;
+         "></div>
+         <div style="
+               background-color: antiquewhite;
+         "></div>
+      </div>
    </div>
    <div id="app" style="display: none;">
       <v-app>
          <v-main>
-            
-            <div >
+
+            <div>
                <v-progress-linear style="width: 100%;
                position: -webkit-sticky;
                position: fixed;
                top: 0;
                z-index: 1050" v-model="readPercentage"></v-progress-linear>
             </div>
-            
-            
-            <v-alert
-               :type="AlertType"
-               :value="isAlertOpen"
-               transition="fade-transition"
-               style="z-index: 99999; 
+
+
+            <v-alert :type="AlertType" :value="isAlertOpen" transition="fade-transition" style="z-index: 99999; 
                       position: fixed; 
                       left: 50%;
-                      transform: translateX(-50%);"
-               >
+                      transform: translateX(-50%);">
                {{AlertMessage}}
             </v-alert>
             <v-container>
-               
+
                <v-row no-gutters>
                   <v-card elevation="2" outlined style="padding:5px">
                      <v-card-text>
@@ -59,20 +65,22 @@
 
                               </v-row>
                               <v-row>
-                                 <v-col align="center" justify="center" >
+                                 <v-col align="center" justify="center">
                                     <!--社交連結-->
 
-                                    <a class="icon icon-facebook" href="#facebook" ></a>
-                                    <a class="icon icon-github" href="https://github.com/cs60811" target="_blank" ></a>
-                                    <a class="icon icon-instagram" href="#" ></a>
-                                    <a class="icon icon-linkedin" href="google.com.tw" ></a>
-                                    <a class="icon icon-mail" href="#" @click="isdialogVisiable = true" id="DemoStep3" ></a>
-                                    <v-tooltip v-model="displayTooltip" bottom >
+                                    <a class="icon icon-facebook" href="#facebook"></a>
+                                    <a class="icon icon-github" href="https://github.com/cs60811" target="_blank"></a>
+                                    <a class="icon icon-instagram" href="#"></a>
+                                    <a class="icon icon-linkedin" href="google.com.tw"></a>
+                                    <a class="icon icon-mail" href="#" @click="isdialogVisiable = true"
+                                       id="DemoStep3"></a>
+                                    <v-tooltip v-model="displayTooltip" bottom>
                                        <template v-slot:activator="{ on, attrs }">
-                                          <a href="#" @click="onDemoClick()" v-bind="attrs" v-on="on" class="icon icon-demo"  ></a>
-                                          
-                                        </template>
-                                       
+                                          <a href="#" @click="onDemoClick()" v-bind="attrs" v-on="on"
+                                             class="icon icon-demo"></a>
+
+                                       </template>
+
                                        <span>這裡可以幫你導覽履歷唷!</span>
                                     </v-tooltip>
                                  </v-col>
@@ -100,13 +108,13 @@
                                  <div id="DemoStep2">
                                     - C# ( 5 years exp.) <br>
                                     - Delphi ( 2 years exp.) <br>
-                                    - Vue / Js / Html  ( 5 years exp.)<br>
+                                    - Vue / Js / Html ( 5 years exp.)<br>
                                     - PLSQL ( 7 years exp.)<br>
                                     - Java ( 2 years exp.)<br>
                                  </div>
-                                 
+
                               </v-row>
-                              
+
                            </v-col>
                         </v-row>
                         <v-row>
@@ -129,10 +137,10 @@
                                              <v-col cols="12" md="2">
                                                 <strong>{{item.Range}}</strong>
                                              </v-col>
-                                             <v-col cols="12"  md="10">
+                                             <v-col cols="12" md="10">
                                                 <h2>{{item.Title}}</h2>
                                                 <p v-html="item.Content"></p>
-                                                <p>圖片區</p>
+                                                <!-- <p>圖片區</p> -->
                                              </v-col>
 
                                           </v-row>
@@ -178,7 +186,7 @@
                                           </v-row>
                                           <p v-if="item.technologys != undefined">
                                              使用技術 :
-                                             <v-chip small color="blue"  text-color="white"
+                                             <v-chip small color="blue" text-color="white"
                                                 v-for="(tec, tecnidex) in item.technologys" :key="tecnidex"
                                                 style="margin-left: 3px;">
                                                 {{tec}}
@@ -186,7 +194,7 @@
                                           </p>
                                           <p v-if="item.tools != undefined">
                                              使用工具 :
-                                             <v-chip small color="blue"  text-color="white"
+                                             <v-chip small color="blue" text-color="white"
                                                 v-for="(too, tooidex) in item.tools" :key="tooidex"
                                                 style="margin-left: 3px;">
                                                 {{too}}
@@ -236,13 +244,13 @@
                      <v-container>
                         <v-row>
                            <v-col>
-                              <v-form
-                                 ref="form"
-                              >
-                                 <v-text-field v-model="form.name" :counter="10" :rules="rules.name" label="大名" required></v-text-field>
+                              <v-form ref="form">
+                                 <v-text-field v-model="form.name" :counter="10" :rules="rules.name" label="大名"
+                                    required></v-text-field>
                                  <v-text-field v-model="form.email" label="信箱" :rules="rules.email" required>
                                  </v-text-field>
-                                 <v-textarea v-model="form.conetnt"  :counter="500" label="內容" :rules="rules.conetnt" required>
+                                 <v-textarea v-model="form.conetnt" :counter="500" label="內容" :rules="rules.conetnt"
+                                    required>
                                  </v-textarea>
                                  <div>
                                     <p>
@@ -266,11 +274,11 @@
                      </v-btn>
                   </v-card-actions>
                </v-card>
-               
-               
+
+
             </v-dialog>
-            
-            
+
+
          </v-main>
       </v-app>
    </div>
@@ -289,15 +297,18 @@
    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" rel="stylesheet" />
    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
    <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
-   
+
 
    <script>
-      window.onload = function() {
-         document.getElementById("loadingline").style.display  = "none";
-         document.getElementById("app").style.display  = "block";
+      window.onload = function () {
+         setTimeout(function () {
+            document.getElementById("loadingline").style.display = "none";
+            document.getElementById("app").style.display = "block";
+         }, 2000);
+
 
       }
-      
+
 
 
       new Vue({
@@ -306,17 +317,17 @@
          vuetify: new Vuetify(),
          data: {
             sitekey: '6LfCs2IgAAAAAEvvUt5zt3VseDbYQtCkDjcSbu_q',
-            displayTooltip : false,
+            displayTooltip: false,
             form: {
                name: '',
                email: '',
                conetnt: '',
                level: 3
             },
-            isAlertOpen : false,
-            AlertMessage :'',
-            AlertType : 'success',
-            rules : {
+            isAlertOpen: false,
+            AlertMessage: '',
+            AlertType: 'success',
+            rules: {
                name: [
                   v => !!v || '請填寫大名',
                   v => v.length <= 10 || '不可大於10字元',
@@ -340,25 +351,25 @@
 
          },
          methods: {
-            onDemoClick : function (){
+            onDemoClick: function () {
                introJs()
                   .setOptions({
-                  steps: [{
-                     title: '歡迎來到謝政剛的履歷',
-                     intro: '我這邊將快速為您介紹 👋'
-                  },
-                  {
-                     element: document.querySelector('#DemoStep1'),
-                     intro: '這是我的名字'
-                  },
-                  {
-                     element: document.querySelector('#DemoStep2'),
-                     intro: '這是我的技能年資'
-                  },
-                  {
-                     element: document.querySelector('#DemoStep3'),
-                     intro: '這裡可以直接連絡我'
-                  }]
+                     steps: [{
+                        title: '歡迎來到謝政剛的履歷',
+                        intro: '我這邊將快速為您介紹 👋'
+                     },
+                     {
+                        element: document.querySelector('#DemoStep1'),
+                        intro: '這是我的名字'
+                     },
+                     {
+                        element: document.querySelector('#DemoStep2'),
+                        intro: '這是我的技能年資'
+                     },
+                     {
+                        element: document.querySelector('#DemoStep3'),
+                        intro: '這裡可以直接連絡我'
+                     }]
                   })
                   .setOption("skipLabel", "跳過導覽")
                   .setOption("doneLabel", "完成")
@@ -369,20 +380,20 @@
                readPercentage = document.scrollingElement.scrollTop / document.body.clientHeight * 100;
             },
 
-            VMessage : function ( message ,  type = 'success' ){
+            VMessage: function (message, type = 'success') {
                this.AlertMessage = message;
                this.AlertType = type;
                this.isAlertOpen = true;
                window.setTimeout(() => {
                   this.isAlertOpen = false;
-               }, 3000) ;
+               }, 3000);
 
 
             },
-            onSendMail : function (){
+            onSendMail: function () {
                //驗證是否完成填寫
                if (!this.$refs.form.validate())
-               return;
+                  return;
 
                var body = `有人聯繫你了! 請盡快回覆<br>
                               <hr>
@@ -392,46 +403,46 @@
                               履歷評分 : ${this.form.level}<br>
                               `;
 
-               
+
                //發信
                Email.send({
-                  SecureToken :"c4ef5ad8-3d86-4c1e-adf5-992958322872",
-                  To : 'cs60811@gmail.com',
-                  From : "cs60811@gmail.com",
-                  Subject : "謝政剛的履歷通知",
-                  Body : body
-               }).then( (message) => {
-                  if (message == 'OK'){
+                  SecureToken: "c4ef5ad8-3d86-4c1e-adf5-992958322872",
+                  To: 'cs60811@gmail.com',
+                  From: "cs60811@gmail.com",
+                  Subject: "謝政剛的履歷通知",
+                  Body: body
+               }).then((message) => {
+                  if (message == 'OK') {
                      this.VMessage('發送成功');
-                     this.isdialogVisiable =  false;
-                  }else{
-                     this.VMessage('發送失敗','error');
+                     this.isdialogVisiable = false;
+                  } else {
+                     this.VMessage('發送失敗', 'error');
                      console.log(message);
                   }
-                  
-                  
+
+
                }
-               
+
                );
             }
          },
-         submit: function(token) {
+         submit: function (token) {
             console.log(token);
          },
 
          mounted() {
             var self = this;
-            document.addEventListener("scroll", function(){
-               if(document.scrollingElement.scrollTop == 0)
+            document.addEventListener("scroll", function () {
+               if (document.scrollingElement.scrollTop == 0)
                   self.readPercentage = 0;
                else
                   self.readPercentage = (document.scrollingElement.scrollTop + window.innerHeight) / document.body.clientHeight * 100;
-               
+
             });
 
             setTimeout(() => {
                this.displayTooltip = true;
-            }, 500);
+            }, 3000);
 
 
 
@@ -448,47 +459,109 @@
 
       //style="background: red;animation: mymove 5s infinite;-webkit-animation: mymove 5s infinite;"
    </script>
-   
+
 
 </body>
 
 </html>
 
 <style>
-   @keyframes mymove{
-      from{ background-color:red;}
-      to{background-color:blue;}
+   @keyframes mymove {
+      from {
+         background-color: red;
+      }
+
+      to {
+         background-color: blue;
+      }
    }
+
    .icon {
       display: inline-block;
       width: 20px;
       height: 20px;
       background-size: cover;
    }
+
    .icon:hover,
    .icon:focus {
       filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
    }
+
+   .icon-demo {
+      background-image: url(./img/icon/demo.svg);
+      filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+      
+   }
+
    .icon-demo {
       background-image: url(./img/icon/demo.svg);
    }
-   .icon-demo {
-      background-image: url(./img/icon/demo.svg);
-   }
+
    .icon-facebook {
       background-image: url(./img/icon/facebook.svg);
    }
+
    .icon-github {
       background-image: url(./img/icon/github.svg);
    }
+
    .icon-instagram {
       background-image: url(./img/icon/instagram.svg);
    }
+
    .icon-linkedin {
       background-image: url(./img/icon/linkedin.svg);
    }
+
    .icon-mail {
       background-image: url(./img/icon/mail.svg);
    }
-</style>
 
+   .lds-facebook {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+   }
+
+   .lds-facebook div {
+      display: inline-block;
+      position: absolute;
+      left: 8px;
+      width: 16px;
+      background: #fff;
+      animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+   }
+
+   .lds-facebook div:nth-child(1) {
+      left: 8px;
+      animation-delay: -0.24s;
+   }
+
+   .lds-facebook div:nth-child(2) {
+      left: 32px;
+      animation-delay: -0.12s;
+   }
+
+   .lds-facebook div:nth-child(3) {
+      left: 56px;
+      animation-delay: 0;
+   }
+
+   @keyframes lds-facebook {
+      0% {
+         top: 8px;
+         height: 64px;
+      }
+
+      50%,
+      100% {
+         top: 24px;
+         height: 32px;
+      }
+   }
+</style>
