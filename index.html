@@ -104,7 +104,7 @@
                               <v-row>
                                  <v-divider></v-divider>
                               </v-row>
-                              <v-row>
+                              <v-row style="display: flex;flex-wrap: nowrap;">
                                  <div id="DemoStep2">
                                     - C# ( 5 years exp.) <br>
                                     - Delphi ( 2 years exp.) <br>
@@ -112,6 +112,7 @@
                                     - PLSQL ( 7 years exp.)<br>
                                     - Java ( 2 years exp.)<br>
                                  </div>
+                                 <div id="chartdiv" style="width: 100%;height: 200px;"></div>
 
                               </v-row>
 
@@ -179,6 +180,7 @@
                                           <v-img max-height="150" max-width="250" :src="picSrc"></v-img>
                                        </v-col>
                                     </v-row>
+                                    
                                     <v-row>
                                        <v-col>
                                           <v-row>
@@ -204,6 +206,19 @@
                                        </v-col>
 
                                     </v-row>
+                                    <v-row v-if="item.pic != undefined && item.pic.length > 0">
+                                       <v-col v-for="(path, index) in item.pic" :key="index">
+
+                                          <el-image
+                                             style="width: 200px; height: 150px"
+                                             :src="path"
+                                             :zoom-rate="1.2"
+                                             :preview-src-list="item.pic"
+                                             fit="cover"
+                                          />
+                                          
+                                       </v-col>
+                                    </v-row>
 
 
                                  </v-col>
@@ -211,16 +226,75 @@
                            </v-col>
                         </v-row>
                         <v-row>
+                           <v-divider></v-divider>
+                        </v-row>
+                        <v-row>
                            <v-col>
                               <v-row>
                                  <v-col>
                                     <h1>其他說明 Other</h1>
                                  </v-col>
-
                               </v-row>
-                              <v-row>
-                                 <v-col>
-                                    內容
+                              <v-row v-for="(item, index) in SidePorjectList" :key="index.id">
+                                 <v-col cols="2" align="center" justify="center">
+                                    <h3>
+                                       {{item.title}}
+                                    </h3>
+
+                                 </v-col>
+                                 <v-col cols="10">
+                                    <v-row>
+                                       <v-col>
+                                          {{item.content}}
+                                       </v-col>
+                                    </v-row>
+                                    <v-row v-if="item.imgs  != undefined">
+                                       <v-col :col="item.imgs.lenth/12" v-for="(picSrc, picindex) in item.imgs"
+                                          :key="picindex">
+                                          <v-img max-height="150" max-width="250" :src="picSrc"></v-img>
+                                       </v-col>
+                                    </v-row>
+                                    
+                                    <v-row>
+                                       <v-col>
+                                          <v-row>
+                                             <!--TODO 在小視窗時整齊排列-->
+                                          </v-row>
+                                          <p v-if="item.technologys != undefined">
+                                             使用技術 :
+                                             <v-chip small color="blue" text-color="white"
+                                                v-for="(tec, tecnidex) in item.technologys" :key="tecnidex"
+                                                style="margin-left: 3px;">
+                                                {{tec}}
+                                             </v-chip>
+                                          </p>
+                                          <p v-if="item.tools != undefined">
+                                             使用工具 :
+                                             <v-chip small color="blue" text-color="white"
+                                                v-for="(too, tooidex) in item.tools" :key="tooidex"
+                                                style="margin-left: 3px;">
+                                                {{too}}
+                                             </v-chip>
+                                          </p>
+
+                                       </v-col>
+
+                                    </v-row>
+                                    <v-row v-if="item.pic != undefined && item.pic.length > 0">
+                                       <v-col v-for="(path, index) in item.pic" :key="index">
+
+                                          <el-image
+                                             style="width: 200px; height: 150px"
+                                             :src="path"
+                                             :zoom-rate="1.2"
+                                             :preview-src-list="item.pic"
+                                             fit="cover"
+                                          />
+                                          
+                                       </v-col>
+                                    </v-row>
+
+
                                  </v-col>
                               </v-row>
 
@@ -298,6 +372,22 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
    <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
 
+   <!-- 引入样式 -->
+   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+   <!-- 引入组件库 -->
+   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+   <!-- <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+   <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+   <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+   <script src="https://cdn.amcharts.com/lib/5/locales/de_DE.js"></script>
+   <script src="https://cdn.amcharts.com/lib/5/geodata/germanyLow.js"></script>
+   <script src="https://cdn.amcharts.com/lib/5/fonts/notosans-sc.js"></script> -->
+
+   <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+   <script src="https://cdn.amcharts.com/lib/5/hierarchy.js"></script>
+   <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
 
    <script>
       window.onload = function () {
@@ -347,7 +437,8 @@
             EnglishName: Mydata.Title.EnglishName,
             Introduction: Mydata.Introduction['zh-tw'],
             ExperienceList: Mydata.ExperienceList,
-            ProjectList: Mydata.ProjectList
+            ProjectList: Mydata.ProjectList,
+            SidePorjectList : Mydata.SidePorjectList
 
          },
          methods: {
@@ -432,7 +523,7 @@
 
          mounted() {
             var self = this;
-            document.addEventListener("scroll", function () {
+            document.addEventListener("scroll", function() {
                if (document.scrollingElement.scrollTop == 0)
                   self.readPercentage = 0;
                else
@@ -442,6 +533,116 @@
 
             setTimeout(() => {
                this.displayTooltip = true;
+
+               // Create root and chart
+               var root = am5.Root.new("chartdiv");
+
+               root.setThemes([
+                  am5themes_Animated.new(root)
+               ]);
+
+               var container = root.container.children.push(
+                  am5.Container.new(root, {
+                        width: am5.percent(100),
+                        height: am5.percent(100),
+                        layout: root.verticalLayout
+                  })
+               );
+
+               var series = container.children.push(
+                  am5hierarchy.ForceDirected.new(root, {
+                        downDepth: 1,
+                        initialDepth: 2,
+                        topDepth: 1,
+                        valueField: "value",
+                        categoryField: "name",
+                        childDataField: "children",
+                        minRadius: 20,
+                  })
+               );
+
+               series.outerCircles.template.states.create("disabled", {
+                  fillOpacity: 0.5,
+                  strokeOpacity: 0,
+                  strokeDasharray: 0
+               });
+
+               series.outerCircles.template.states.create("hoverDisabled", {
+                  fillOpacity: 0.5,
+                  strokeOpacity: 0,
+                  strokeDasharray: 0
+               });
+
+               series.data.setAll([{
+                  name: "Root",
+                  value: 0,
+                  children: [{
+                        name: "全端工程師",
+                        children: [{
+                              name: "前端",
+                              value: 23,
+                              children: [{
+                                    name: "Vue",
+                                    value: 5
+                              }, {
+                                    name: "jQuery",
+                                    value: 6
+                              }, {
+                                    name: "Javascript",
+                                    value: 6
+                              }, {
+                                    name: "Css",
+                                    value: 6
+                              }]
+                           },
+                           {
+                              name: "後端",
+                              value: 13,
+                              children: [{
+                                    name: "C#",
+                                    value: 6
+                              }, {
+                                    name: ".net core",
+                                    value: 5,
+                                    children: [{
+                                       name: "MSTest",
+                                       value: 1,
+                                    }]
+                              }, {
+                                    name: "nodejs",
+                                    value: 1
+                              }, {
+                                    name: "python",
+                                    value: 1
+                              }]
+                           },
+                           {
+                              name: "其他",
+                              value: 23,
+                              children: [{
+                                    name: "Git",
+                                    value: 5
+                              }, {
+                                    name: "Gitlab",
+                                    value: 6
+                              }, {
+                                    name: "DevOps",
+                                    value: 6
+                              }, {
+                                    name: "Docker",
+                                    value: 6
+                              }]
+                           },
+                        ]
+                  }]
+               }]);
+               series.set("selectedDataItem", series.dataItems[0]);
+
+               setTimeout(function(){
+                  document.getElementById('chartdiv').children[0].children[0].children[0].children[1].remove();
+               },1000);
+               
+               
             }, 3000);
 
 
@@ -454,11 +655,15 @@
             .catch((e) => {
                 console.error(e)
             })*/
+
+            //amchart
+            
          }
       })
 
-      //style="background: red;animation: mymove 5s infinite;-webkit-animation: mymove 5s infinite;"
+      
    </script>
+
 
 
 </body>
