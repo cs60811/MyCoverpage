@@ -15,7 +15,7 @@
    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CERVPMR8LC"></script>
    <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
 
       gtag('config', 'G-CERVPMR8LC');
@@ -26,7 +26,8 @@
 
 <body>
 
-   <div id="loadingline">
+
+   <div id="loading-mask">
       <div class="lds-facebook">
          <div style="
                background-color: antiquewhite;
@@ -39,8 +40,21 @@
          "></div>
       </div>
    </div>
-   <div id="app" style="display: none;">
-      <v-app>
+   <!-- <div id="loadingline">
+      <div class="lds-facebook">
+         <div style="
+               background-color: antiquewhite;
+         "></div>
+         <div style="
+               background-color: antiquewhite;
+         "></div>
+         <div style="
+               background-color: antiquewhite;
+         "></div>
+      </div>
+   </div> -->
+   <div id="app">
+      <v-app id="main">
          <v-main>
 
             <div>
@@ -115,10 +129,12 @@
                               </v-row>
                               <v-row style="display: flex;flex-wrap: nowrap;">
                                  <div id="DemoStep2">
-                                    - C# ( 5 years exp.) <br>
+                                    <span>- C# ( 7 years exp.)</span>
+                                    <br>
                                     - Delphi ( 2 years exp.) <br>
-                                    - Vue / Js / Html ( 5 years exp.)<br>
-                                    - PLSQL ( 7 years exp.)<br>
+                                    - Vue / Js / Html ( 6 years exp.)<br>
+                                    - PLSQL(Oracle) ( 8 years exp.)<br>
+                                    - MsSql ( 7 years exp.)<br>
                                     - Java ( 2 years exp.)<br>
                                  </div>
                                  <div id="chartdiv" style="width: 100%;height: 200px;"></div>
@@ -189,7 +205,7 @@
                                           <v-img max-height="150" max-width="250" :src="picSrc"></v-img>
                                        </v-col>
                                     </v-row>
-                                    
+
                                     <v-row>
                                        <v-col>
                                           <v-row>
@@ -218,14 +234,9 @@
                                     <v-row v-if="item.pic != undefined && item.pic.length > 0">
                                        <v-col v-for="(path, index) in item.pic" :key="index">
 
-                                          <el-image
-                                             style="width: 200px; height: 150px"
-                                             :src="path"
-                                             :zoom-rate="1.2"
-                                             :preview-src-list="item.pic"
-                                             fit="cover"
-                                          />
-                                          
+                                          <el-image style="width: 200px; height: 150px" :src="path" :zoom-rate="1.2"
+                                             :preview-src-list="item.pic" fit="cover" />
+
                                        </v-col>
                                     </v-row>
 
@@ -263,7 +274,7 @@
                                           <v-img max-height="150" max-width="250" :src="picSrc"></v-img>
                                        </v-col>
                                     </v-row>
-                                    
+
                                     <v-row>
                                        <v-col>
                                           <v-row>
@@ -292,14 +303,9 @@
                                     <v-row v-if="item.pic != undefined && item.pic.length > 0">
                                        <v-col v-for="(path, index) in item.pic" :key="index">
 
-                                          <el-image
-                                             style="width: 200px; height: 150px"
-                                             :src="path"
-                                             :zoom-rate="1.2"
-                                             :preview-src-list="item.pic"
-                                             fit="cover"
-                                          />
-                                          
+                                          <el-image style="width: 200px; height: 150px" :src="path" :zoom-rate="1.2"
+                                             :preview-src-list="item.pic" fit="cover" />
+
                                        </v-col>
                                     </v-row>
 
@@ -400,9 +406,12 @@
 
    <script>
       window.onload = function () {
+         const loadingMask = document.getElementById('loading-mask'); loadingMask.style.visibility = 'visible'
          setTimeout(function () {
-            document.getElementById("loadingline").style.display = "none";
-            document.getElementById("app").style.display = "block";
+            loadingMask.style.visibility = 'hidden'
+            // document.getElementById("loadingline").style.display = "none";
+            document.getElementById("main").style.visibility = "visible";
+            // document.querySelector("#app > div.v-application--wrap > main").style.display = "none";
          }, 2000);
 
 
@@ -447,7 +456,7 @@
             Introduction: Mydata.Introduction['zh-tw'],
             ExperienceList: Mydata.ExperienceList,
             ProjectList: Mydata.ProjectList,
-            SidePorjectList : Mydata.SidePorjectList
+            SidePorjectList: Mydata.SidePorjectList
 
          },
          methods: {
@@ -532,7 +541,7 @@
 
          mounted() {
             var self = this;
-            document.addEventListener("scroll", function() {
+            document.addEventListener("scroll", function () {
                if (document.scrollingElement.scrollTop == 0)
                   self.readPercentage = 0;
                else
@@ -552,21 +561,21 @@
 
                var container = root.container.children.push(
                   am5.Container.new(root, {
-                        width: am5.percent(100),
-                        height: am5.percent(100),
-                        layout: root.verticalLayout
+                     width: am5.percent(100),
+                     height: am5.percent(100),
+                     layout: root.verticalLayout
                   })
                );
 
                var series = container.children.push(
                   am5hierarchy.ForceDirected.new(root, {
-                        downDepth: 1,
-                        initialDepth: 2,
-                        topDepth: 1,
-                        valueField: "value",
-                        categoryField: "name",
-                        childDataField: "children",
-                        minRadius: 20,
+                     downDepth: 1,
+                     initialDepth: 2,
+                     topDepth: 1,
+                     valueField: "value",
+                     categoryField: "name",
+                     childDataField: "children",
+                     minRadius: 20,
                   })
                );
 
@@ -586,72 +595,73 @@
                   name: "Root",
                   value: 0,
                   children: [{
-                        name: "全端工程師",
+                     name: "全端工程師",
+                     children: [{
+                        name: "前端",
+                        value: 23,
                         children: [{
-                              name: "前端",
-                              value: 23,
-                              children: [{
-                                    name: "Vue",
-                                    value: 5
-                              }, {
-                                    name: "jQuery",
-                                    value: 6
-                              }, {
-                                    name: "Javascript",
-                                    value: 6
-                              }, {
-                                    name: "Css",
-                                    value: 6
-                              }]
-                           },
-                           {
-                              name: "後端",
-                              value: 13,
-                              children: [{
-                                    name: "C#",
-                                    value: 6
-                              }, {
-                                    name: ".net core",
-                                    value: 5,
-                                    children: [{
-                                       name: "MSTest",
-                                       value: 1,
-                                    }]
-                              }, {
-                                    name: "nodejs",
-                                    value: 1
-                              }, {
-                                    name: "python",
-                                    value: 1
-                              }]
-                           },
-                           {
-                              name: "其他",
-                              value: 23,
-                              children: [{
-                                    name: "Git",
-                                    value: 5
-                              }, {
-                                    name: "Gitlab",
-                                    value: 6
-                              }, {
-                                    name: "DevOps",
-                                    value: 6
-                              }, {
-                                    name: "Docker",
-                                    value: 6
-                              }]
-                           },
-                        ]
+                           name: "Vue",
+                           value: 180
+                        },
+                        {
+                           name: "Angular",
+                           value: 11
+                        }, {
+                           name: "jQuery",
+                           value: 16
+                        }, {
+                           name: "Js",
+                           value: 18
+                        }, {
+                           name: "Css",
+                           value: 16
+                        }]
+                     },
+                     {
+                        name: "後端",
+                        value: 13,
+                        children: [{
+                           name: ".net ",
+                           value: 150,
+                           children: [{
+                              name: "MSTest",
+                              value: 1,
+                           }]
+                        }, {
+                           name: "nodejs",
+                           value: 1
+                        }, {
+                           name: "python",
+                           value: 1
+                        }]
+                     },
+                     {
+                        name: "其他",
+                        value: 23,
+                        children: [{
+                           name: "Git",
+                           value: 5
+                        }, {
+                           name: "Gitlab",
+                           value: 6
+                        }, {
+                           name: "DevOps",
+                           value: 6
+                        }, {
+                           name: "Docker",
+                           value: 6
+                        }]
+                     },
+                     ]
                   }]
                }]);
                series.set("selectedDataItem", series.dataItems[0]);
 
-               setTimeout(function(){
+               setTimeout(function () {
                   document.getElementById('chartdiv').children[0].children[0].children[0].children[1].remove();
-               },1000);
-               
-               
+               }, 1000);
+
+
             }, 3000);
 
 
@@ -666,11 +676,11 @@
             })*/
 
             //amchart
-            
+
          }
       })
 
-      
+
    </script>
 
 
@@ -705,7 +715,7 @@
    .icon-demo {
       background-image: url(./img/icon/demo.svg);
       filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
-      
+
    }
 
    .icon-demo {
@@ -732,14 +742,15 @@
       background-image: url(./img/icon/mail.svg);
    }
 
+
    .lds-facebook {
       display: inline-block;
-      position: relative;
       width: 80px;
       height: 80px;
       position: fixed;
       top: 50%;
       left: 50%;
+      z-index: 100;
    }
 
    .lds-facebook div {
@@ -777,5 +788,52 @@
          top: 24px;
          height: 32px;
       }
+   }
+
+   /* loading 遮罩樣式 */
+   #loading-mask {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      z-index: 9999;
+      /* 確保遮罩在最上層 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+   }
+
+   /* 加載動畫樣式 */
+   .loader {
+      border: 16px solid #f3f3f3;
+      /* Light grey */
+      border-top: 16px solid #3498db;
+      /* Blue */
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+   }
+
+   /* 加載動畫效果 */
+   @keyframes spin {
+      0% {
+         transform: rotate(0deg);
+      }
+
+      100% {
+         transform: rotate(360deg);
+      }
+   }
+
+   /* 顯示內容樣式 */
+   .content {
+      padding: 20px;
+   }
+
+   #DemoStep2 {
+      width: 300px;
    }
 </style>
